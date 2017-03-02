@@ -32,8 +32,10 @@ public class TorresHanoi {
 		nDiscos = n;
 	}
 	
-	public void solve(){
-		llevarAlDestino(nDiscos, origen, intermedia, destino);
+	public void solve(boolean debug){
+		if(debug)
+			System.out.println(origen +"\n" + intermedia +"\n" + destino + "\n\n");
+		llevarAlDestino(debug, nDiscos, origen, intermedia, destino);
 	}
 	/**
 	 * el algoritmo que empleamos es el siguiente:
@@ -44,14 +46,28 @@ public class TorresHanoi {
 	 * @param aux (torre auxiliar)
 	 * @param dest (torre de destino)
 	 */
-	private void llevarAlDestino(int disco, Torre ori, Torre aux, Torre  dest){
-		if(ori.getTop() == disco)
+	private void llevarAlDestino(boolean debug,int disco, Torre ori, Torre aux, Torre  dest){
+		if(ori.getTop() == disco){
 			dest.add(ori.getDisk());
-		else{
-			llevarAlDestino(disco-1, ori,dest,aux);
-			dest.add(ori.getDisk());
-			llevarAlDestino(disco-1, aux, ori,dest);
+			if(debug)
+				System.out.println(origen +"\n" + intermedia +"\n" + destino + "\n\n");
 		}
-		System.out.println(origen +"\n" + intermedia +"\n" + destino);
+		else{
+			llevarAlDestino(debug, disco-1, ori,dest,aux);
+			dest.add(ori.getDisk());
+			if(debug)
+				System.out.println(origen +"\n" + intermedia +"\n" + destino + "\n\n");
+			llevarAlDestino(debug, disco-1, aux, ori,dest);
+		}
+	}
+	
+	public static void main (String args[]){
+		int n = Integer.parseInt(args[0]);
+		int b = Integer.parseInt(args[1]);
+		boolean debug=false;
+		if(b == 1)
+			debug = true;
+		TorresHanoi test = new TorresHanoi(n);
+		test.solve(debug);
 	}
 }

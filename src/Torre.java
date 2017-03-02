@@ -38,6 +38,10 @@ public class Torre {
 		return out;
 	}
 	public void add(int d){
+		if(almacen.size() == 0){
+			almacen.add(d);
+			return;
+		}
 		if(d> almacen.get(almacen.size() - 1))
 			throw new IllegalArgumentException("No se puede poner un disco sobre otro mas pequeño");
 		almacen.add(d);
@@ -45,8 +49,10 @@ public class Torre {
 	
 	public String toString(){
 		String out = new String();
-		for(int i = almacen.size()-1; i>=0; i--)
-			out += almacen.get(i);
+		for(int i = 0; i<almacen.size(); i++)
+			out += almacen.get(i)+",";
+		if(almacen.size()==0)
+			out += "-";
 		return out;
 	}
 }
