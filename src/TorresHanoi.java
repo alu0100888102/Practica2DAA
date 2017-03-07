@@ -35,7 +35,38 @@ public class TorresHanoi {
 	public void solve(boolean debug){
 		if(debug)
 			System.out.println(origen +"\n" + intermedia +"\n" + destino + "\n\n");
+		long startTime = System.nanoTime();
 		llevarAlDestino(debug, nDiscos, origen, intermedia, destino);
+		long endTime = System.nanoTime();
+		long duration = (endTime - startTime);
+		double miliseconds = (double)duration /1000000;
+		System.out.println("Ha tardado: " + miliseconds + " milisegundos.");
+	}
+	
+	/**
+	 * la variante cíclica lleva los discos a la siguiente torre cada vez.
+	 * @param debug
+	 */
+	public void solveCiclical(boolean debug){
+		Torre start = null, end = null, aux = null;
+		if(origen.getTop() != null){
+			start = origen;
+			end = intermedia;
+			aux = destino;
+		}
+		if(intermedia.getTop() != null){
+			start = intermedia;
+			end = destino;
+			aux = origen;
+		}
+		if(destino.getTop() != null){
+			start = destino;
+			end = origen;
+			aux = intermedia;
+		}
+		if(debug)
+			System.out.println(origen +"\n" + intermedia +"\n" + destino + "\n\n");
+		llevarAlDestino(debug, nDiscos, start, aux, end);
 	}
 	/**
 	 * el algoritmo que empleamos es el siguiente:
@@ -68,6 +99,14 @@ public class TorresHanoi {
 		if(b == 1)
 			debug = true;
 		TorresHanoi test = new TorresHanoi(n);
+/*		System.out.println("--------------------------");
+		test.solveCiclical(debug);
+		System.out.println("--------------------------");
+		test.solveCiclical(debug);
+		System.out.println("--------------------------");
+		test.solveCiclical(debug);
+		System.out.println("--------------------------");		*/
 		test.solve(debug);
+		System.out.println("Pasos: " + (Math.pow(2, n) -1));
 	}
 }
